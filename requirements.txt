@@ -1,0 +1,16 @@
+# Giới hạn numpy dưới bản 2.0 để tránh lỗi với stardist và albumentations
+numpy<2.0.0
+
+# Thư viện xử lý ảnh
+matplotlib
+scikit-image
+tqdm
+
+# OpenCV: Nên dùng bản headless nếu chạy server/docker để tránh lỗi GUI
+opencv-python-headless
+
+# Thư viện Augmentation
+albumentations
+
+# Stardist (Thường kéo theo Tensorflow, nhưng ta cần công cụ hình học của nó)
+stardist
