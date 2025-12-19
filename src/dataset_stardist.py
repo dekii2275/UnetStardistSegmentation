@@ -4,7 +4,7 @@ import numpy as np
 import torch
 import stardist
 from torch.utils.data import Dataset
-from stardist.geometry import star_dist # <--- ĐÚNG (Bản mới)  # Cần thư viện này để tính khoảng cách
+from stardist.geometry import star_dist 
 from utils import adaptive_normalization
 
 class StarDistDataset(Dataset):

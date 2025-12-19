@@ -6,17 +6,12 @@ from scipy.ndimage import maximum_filter, label
 from skimage.draw import polygon
 import matplotlib.pyplot as plt
 from tqdm import tqdm
-
-# --- Import modules từ project của bạn ---
 from config import Config
 from dataset_stardist import StarDistDataset
 from transform import get_transforms
 from model_stardist import StarDist
 from utils import seed_everything
 
-# ==========================
-# 1. CÁC HÀM HẬU XỬ LÝ (POST-PROCESSING)
-# ==========================
 
 def find_peaks(prob_map, prob_thresh=0.5, min_distance=2):
     """Tìm local maxima trên bản đồ xác suất."""
@@ -103,8 +98,6 @@ def stardist_postprocess(prob_map, dist_map, prob_thresh=0.5, peak_min_distance=
     masks = []
     scores = []
 
-    # Dist map của bạn có shape (n_rays, H, W) -> cần transpose khi truy cập từng điểm
-    # Nhưng trong loop bên dưới ta truy cập dist_map[:, y, x] là đúng với shape (n_rays, H, W)
     
     for (y, x) in centers:
         rays = dist_map[:, y, x] # (n_rays,)
@@ -122,8 +115,6 @@ def stardist_postprocess(prob_map, dist_map, prob_thresh=0.5, peak_min_distance=
     inst_scores = {}
     next_id = 1
     
-    # Vẽ đè các mask lên nhau (cái nào điểm cao hơn được vẽ trước, nhưng ở đây vẽ đè theo thứ tự keep)
-    # Để tối ưu hiển thị, ta nên vẽ ngược lại hoặc chỉ cần đảm bảo ID khác nhau
     for ki in keep_idxs:
         labeled[masks[ki]] = next_id
         inst_scores[next_id] = float(scores[ki])
@@ -131,9 +122,6 @@ def stardist_postprocess(prob_map, dist_map, prob_thresh=0.5, peak_min_distance=
 
     return labeled, inst_scores
 
-# ==========================
-# 2. CÁC HÀM TÍNH TOÁN METRIC (AP, IoU)
-# ==========================
 
 def collect_ap_data_for_image(gt_mask, pred_mask, inst_scores, iou_thresh=0.5):
     gt_ids = [i for i in np.unique(gt_mask) if i != 0]
@@ -202,9 +190,6 @@ def compute_ap_from_scores(all_scores, all_tp_flags, total_gt):
     ap = np.sum((mrec[idx + 1] - mrec[idx]) * mpre[idx + 1])
     return float(ap)
 
-# ==========================
-# 3. HÀM MAIN
-# ==========================
 
 def evaluate():
     # 1. Setup
@@ -214,7 +199,7 @@ def evaluate():
     seed_everything(cfg.SEED)
 
     # 2. Load Model
-    # n_rays=32 (Cần khớp với lúc train)
+    # n_rays=32
     model = StarDist(n_channels=3, n_rays=32).to(device)
     
     checkpoint_path = 'best_stardist_checkpoint.pth'

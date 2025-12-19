@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from torch.utils.data import DataLoader, random_split
 
-# Import các module từ project của bạn
-# Đảm bảo bạn đang đứng ở thư mục gốc (UnetStardistSegmentation) khi chạy
 from config import Config
 from dataset import DSB2018Dataset
 from transform import get_transforms
@@ -153,8 +151,7 @@ class ModelEvaluator:
         plt.savefig('evaluation_result.png') # Lưu ảnh thay vì show
         print(f"📊 Đã lưu biểu đồ kết quả vào 'evaluation_result.png'")
         print(f"\n🏆 KẾT QUẢ CUỐI CÙNG: mAP = {mAP:.4f}")
-
-# --- PHẦN CHẠY CHÍNH (MAIN) ---
+        
 if __name__ == "__main__":
     # 1. Cấu hình & Thiết bị
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

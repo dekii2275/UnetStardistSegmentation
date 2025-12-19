@@ -44,11 +44,6 @@ class DSB2018Dataset(Dataset):
                         m = cv2.resize(m, (w, h), interpolation=cv2.INTER_NEAREST)
                     mask = np.maximum(mask, m)
         
-        # Chuyển mask về nhị phân (0 và 1) nếu chưa phải
-        # Albumentations thích mask kiểu float cho binary segmentation đôi khi, 
-        # nhưng chuẩn là giữ nguyên giá trị rồi xử lý sau. 
-        # Ở đây ta giữ mask nền đen (0) và vật thể (255) hoặc (1).
-        # Để an toàn cho tính toán loss sau này, ta đưa về 0.0 và 1.0
         mask = (mask > 0).astype(np.float32)
 
         # 4. Áp dụng Adaptive Normalization (Quan trọng!)

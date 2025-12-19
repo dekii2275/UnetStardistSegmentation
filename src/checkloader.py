@@ -10,9 +10,7 @@ if __name__ == '__main__':
     cfg = Config()
     seed_everything(cfg.SEED)
     print(f"✅ Config loaded. Strategy: {cfg.CROP_STRATEGY}")
-    
-    # 2. Tạo Dataset & DataLoader
-    # Lưu ý: Sửa lại đường dẫn TRAIN_DIR trong config.py cho đúng máy bạn
+
     try:
         train_dataset = DSB2018Dataset(
             root_dir=cfg.TRAIN_DIR,
@@ -26,7 +24,7 @@ if __name__ == '__main__':
             num_workers=cfg.NUM_WORKERS
         )
         
-        print(f"✅ Dataset created. Total samples: {len(train_dataset)}")
+        print(f"Dataset created. Total samples: {len(train_dataset)}")
         
         # 3. Lấy thử 1 batch
         images, masks = next(iter(train_loader))

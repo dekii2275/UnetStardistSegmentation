@@ -12,7 +12,7 @@ img, prob, dist = ds[0]
 
 print("Image shape:", img.shape)       # (3, 256, 256)
 print("Prob shape:", prob.shape)       # (1, 256, 256)
-print("Dist shape:", dist.shape)       # (32, 256, 256) <--- 32 kênh khoảng cách
+print("Dist shape:", dist.shape)       # (32, 256, 256) 
 
 # Vẽ thử
 plt.figure(figsize=(12, 4))
