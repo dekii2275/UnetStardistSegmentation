@@ -39,41 +39,42 @@ project_root/
 ├── best_stardist_checkpoint.pth # Weight tốt nhất của StarDist
 └── README.md
 ```
-## Để triển khai mô hình vui lòng cài đặt các thư viện cần thiết trong file requirements.txx
-Sau đó tiến hành các bước cấu hình và huấn luyện
-1. Cấu hình
+## Để triển khai mô hình vui lòng cài đặt các thư viện cần thiết trong file requirements.txt
+Sau đó tiến hành các bước cấu hình và huấn luyện:
 
-Mở file src/config.py để chỉnh sửa đường dẫn dữ liệu và tham số:
-Python
+### 1. Cấu hình
 
+Mở file `src/config.py` để chỉnh sửa đường dẫn dữ liệu và tham số:
+
+```python
 class Config:
     TRAIN_DIR = './data/train'
     BATCH_SIZE = 8  # Giảm xuống 4 nếu VRAM < 4GB
     IMG_SIZE = 256
     CROP_STRATEGY = 'multiscale_smart' # Chiến lược crop ảnh thông minh
+```
 
-2. Huấn luyện (Training)
-
+### 2. Huấn luyện mô hình 
 Train U-Net (Cơ bản):
-Bash
-
+```python
 python src/train.py
-
+```
 Train StarDist (Nâng cao): Lưu ý: StarDist sử dụng Mixed Precision (AMP) để tiết kiệm bộ nhớ GPU.
-Bash
-
+```python
 python src/train_stardist.py
+```
 
-3. Đánh giá (Evaluation)
+### 3. Đánh giá (Evaluation)
 
 Tính toán chỉ số mAP trên tập Validation và vẽ biểu đồ Precision-IoU.
 
 Đánh giá U-Net:
-Bash
-
+```python
 python src/evaluation.py
-
+```
 Đánh giá StarDist:
-Bash
-
+```python
 python src/evaluation_stardist.py
+```
+
+### 4. Mở rộng thêm trong thư mục jupyter còn có 2 file là 1_data.ipynb và 2_trainning.ipynb là các sử dụng startdist với thư viện.
